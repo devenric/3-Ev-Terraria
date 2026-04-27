@@ -23,31 +23,44 @@ class Gestor extends Connection{
     }
     function crear($terrarian){
         if ($terrarian instanceof Mago) {
-    $SQL = 'INSERT INTO Terrariano (tag, hp, class, mana) VALUES (:tag, :hp, :class, :mana)';
+            $SQL = 'INSERT INTO Terrariano (tag, hp, class, mana) VALUES (:tag, :hp, :class, :mana)';
         }elseif ($terrarian instanceof Melee) {
-            $SQL = 'INSERT INTO Terrariano (tag,hp, class, blade) VALUES :tag, :hp, :class, :blade';
+            $SQL = 'INSERT INTO Terrariano (tag,hp, class, blade) VALUES (:tag, :hp, :class, :blade)';
 
         }elseif ($terrarian instanceof Ranger) {
-            $SQL = 'INSERT INTO Terrariano (tag, hp, class, weapon) VALUES :tag, :hp, :class, :weapon';
+            $SQL = 'INSERT INTO Terrariano (tag, hp, class, weapon) VALUES (:tag, :hp, :class, :weapon)';
         }
         elseif ($terrarian instanceof Summoner) {
             $SQL = 'INSERT INTO Terrariano (tag, hp, class, invocacion) VALUES (:tag, :hp, :class, :invocacion)';
         }
         $resultado = $this->conexion->prepare($SQL);
-        $resultado->bindValue(':tag', $terrarian->getTag());
-        $resultado->bindValue(':hp', $terrarian->getHP());
-        $resultado->bindValue(':class', $terrarian->getClass());
-        if ($terrarian instanceof Mago) {
-        $resultado->bindValue(':mana', $terrarian->getMana());
-        }
-        elseif ($terrarian instanceof Melee) {
-        $resultado->bindValue(':blade', $terrarian->getBlade());
-        }elseif ($terrarian instanceof Ranger) {
-        $resultado->bindValue(':weapon', $terrarian->getWeapon());
-        }elseif ($terrarian instanceof Summoner) {
-        $resultado->bindValue(':invocacion', $terrarian->getInvocacion());
-        }
-        return $resultado->execute();
+if (!$resultado) {
+    // Error en la preparación
+    $errorInfo = $this->conexion->errorInfo();
+    throw new Exception("Error en preparación: " . $errorInfo[2]);
+}
+
+$resultado->bindValue(':tag', $terrarian->getTag());
+$resultado->bindValue(':hp', $terrarian->getHP());
+$resultado->bindValue(':class', $terrarian->getClass());
+
+if ($terrarian instanceof Mago) {
+    $resultado->bindValue(':mana', $terrarian->getMana());
+} elseif ($terrarian instanceof Melee) {
+    $resultado->bindValue(':blade', $terrarian->getBlade());
+} elseif ($terrarian instanceof Ranger) {
+    $resultado->bindValue(':weapon', $terrarian->getWeapon());
+} elseif ($terrarian instanceof Summoner) {
+    $resultado->bindValue(':invocacion', $terrarian->getInvocacion());
+}
+
+if (!$resultado->execute()) {
+    $errorInfo = $resultado->errorInfo();
+    // Puedes registrar o mostrar el error
+    throw new Exception("Error en ejecución: " . $errorInfo[2]);
+}
+
+return true;
     }
     function buscar(){
 

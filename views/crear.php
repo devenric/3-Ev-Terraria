@@ -46,7 +46,7 @@
             <input type="text" name="blade" class="blade" placeholder="Espada"><br>
         </div>
         <div class="ranger">
-            <input type="text" name="weapon" class="weapon" placeholder="Arma"><br>
+            <input type="text   " name="weapon" class="weapon" placeholder="Arma"><br>
         </div>
         <div class="summoner">
             <input type="number" name="invocacion" class="invocacion" placeholder="Invocación"><br>

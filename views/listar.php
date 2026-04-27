@@ -40,7 +40,7 @@
             <td><?= $p->getTag() ?></td>
             <td><?= $p->getHP() ?></td>          
             <td><?= $p->getClass() ?></td>
-            <td><?= ($p instanceof Mago) ? $p->getMana() : (($p instanceof Melee) ? $p->getBlade() : (($p instanceof Summoner) ? $p->getInvocacion() : $p->getWeapon())) ?></td>            
+            <td><?= ($p instanceof Melee) ? $p->getBlade() : (($p instanceof Mago) ? $p->getMana() : (($p instanceof Summoner) ? $p->getInvocacion() : $p->getWeapon())); var_dump($p)?></td>            
        
             <td>
                 <a href="index.php?accion=editar&id=<?= $p->getId() ?>">Editar</a>
