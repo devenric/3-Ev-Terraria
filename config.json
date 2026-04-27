@@ -1,0 +1,6 @@
+{
+"host":"db",
+"db":"TerraCRUD",
+"username":"root",
+"password":"test"
+}
