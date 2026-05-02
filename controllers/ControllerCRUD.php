@@ -19,42 +19,59 @@ class ControllerCRUD{
             $blade = $_POST['blade'];
             $weapon = $_POST['weapon'];
             $invocacion = $_POST['invocacion'];
-            if ($mana !== null) {
-                $terrarian = new Mago($tag, $hp, $class, $mana,0);
-            }elseif ($blade !== null) {
-                $terrarian = new Melee($tag, $hp, $class, $blade,0);
-            }elseif ($weapon !== null) {
-                $terrarian = new Ranger($tag, $hp, $class, $weapon,0);
+            switch ($class) {
+                case 'mago':
+                    $terrarian = new Mago($tag, $hp, $class, $mana,0);
+                    $this->gestor->crear($terrarian);
+                    header("Location: index.php");
+                    exit;
+                    break;
+                case 'melee':
+                    $terrarian = new Melee($tag, $hp, $class, $blade,0);
+                    $this->gestor->crear($terrarian);
+                    header("Location: index.php");
+                    exit;
+                    break;
+                case 'ranger':
+                    $terrarian = new Ranger($tag, $hp, $class, $weapon,0);
+                    $this->gestor->crear($terrarian);
+                    header("Location: index.php");
+                    exit;
+                    break;
+                case 'summoner':
+                    $terrarian = new Summoner($tag, $hp, $class, $invocacion,0);
+                    $this->gestor->crear($terrarian);
+                    header("Location: index.php");
+                    exit;
+                    break;
+                }
             }
-            elseif ($invocacion !== null) {
-                $terrarian = new Summoner($tag, $hp, $class, $invocacion,0);
-            }
-            $this->gestor->crear($terrarian);
-            header("Location: index.php");
-            exit;
+            include "views/crear.php";
         }
-        include "views/crear.php";
-    }
     function editar(){
-        $id = $_POST['id'] ?? null;
+        $id = $_GET['id'] ?? null;
         $terrarian = $this->gestor->buscar($id);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if ($_POST['mana'] !== null) {
-                $terrarian = $this->gestor->editar($_POST['tag'],$_POST['hp'], $_POST['class'], $_POST['mana']);
-            }elseif ($_POST['blade'] !== null) {
-                $terrarian = $this->gestor->editar($_POST['tag'],$_POST['hp'], $_POST['class'], $_POST['blade']);
-            }
-            elseif ($_POST['weapon'] !== null) {
-                $terrarian = $this->gestor->editar($_POST['tag'],$_POST['hp'], $_POST['class'], $_POST['weapon']);
-            }
-            elseif ($_POST['invocacion'] !== null) {
-                $terrarian = $this->gestor->editar($_POST['tag'],$_POST['hp'], $_POST['class'], $_POST['invocacion']);
-            }
+        $tag = $_POST['tag'];
+        $hp = $_POST['hp'];
+        $class = $_POST['class'];
+        $atributoClase = null;
+
+        if ($class === 'Mago') {
+            $atributoClase = $_POST['mana'];
+        } elseif ($class === 'Melee') {
+            $atributoClase = $_POST['blade'];
+        } elseif ($class === 'Ranger') {
+            $atributoClase = $_POST['weapon'];
+        } elseif ($class === 'Summoner') {
+            $atributoClase = $_POST['invocacion'];
+        }
+        $this->gestor->editar($id, $tag, $hp, $class, $atributoClase); //cuidado con el orden! recomiendo hacerlo de la forma más limpiecita
             header("Location: index.php");
             exit;
         }
         include "views/editar.php";
-    }
+    }   
     function eliminar(){
         $id = $_GET['id'] ?? null; //seleccionar mediante identificacion
         $this->gestor->eliminar($id);//ejecutar método CRUD

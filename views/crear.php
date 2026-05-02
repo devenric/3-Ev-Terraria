@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Crear Producto</title>
+    <title>Crear Terrariano</title>
     <style>
         .mana, .blade, .weapon, .invocacion{
             display:none;
@@ -30,7 +30,7 @@
         <br>
         <input type="number" name="hp" required placeholder="hp"><br><br>
         <br>
-        ¿Qué Clase es?:
+        ¿Qué Clase eres?:
              <select name="class" id="class" class="option">
                  <option value="mago">mago</option>
                  <option value="melee">melee</option>

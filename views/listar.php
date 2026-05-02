@@ -5,22 +5,22 @@
     </head>
     <body>
     <div style="background-color: #f0f0f0; padding: 10px; margin-bottom: 20px;">
-        <?php if (isset($_SESSION['usuarioId'])): ?>
+        <?php if (isset($_SESSION['usuarioID'])): ?>
             Bienvenido, <b><?= $_SESSION['usuarioEmail'] ?></b> |
             <a href="index.php?accion=logout">Cerrar Sesión</a>
         <?php else: ?>
             <a href="index.php?accion=login">Iniciar Sesión</a> | 
-            <a href="index.php?accion=registro">Registrarse</a>
+            <a href="index.php?accion=register">Registrarse</a>
         <?php endif; ?>
     </div>
     
     <h1>TerraCRUD</h1>
     
-    <?php //if (isset($_SESSION['usuarioId'])): ?>
-        <!-- <a href="index.php?accion=crear">Agregar Vehículo</a><br><br> -->
-        <!-- <a href="index.php?accion=borrarTodo">Borrar Todo</a> -->
+    <?php if (isset($_SESSION['usuarioID'])): ?>
+        <a href="index.php?accion=crear">Agregar Vehículo</a><br><br> 
+        <a href="index.php?accion=borrarTodo">Borrar Todo</a>
 
-    <?php //endif; ?>
+    <?php endif; ?>
     
     <table border="1" cellpadding="10">
         <tr>
@@ -51,6 +51,5 @@
         <?php endforeach; ?>
     
     </table>
-<a href="index.php?accion=crear">Crear</a><br><br>    
     </body>
     </html>
