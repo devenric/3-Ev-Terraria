@@ -78,4 +78,24 @@ class ControllerCRUD{
         header("Location: index.php");
         exit;
     }
+public function gestionarPreferencias() {
+   // En el controlador, ANTES de cualquier HTML
+if (isset($_GET['accion'])) {
+    if ($_GET['accion'] == 'color' && isset($_GET['c'])) {
+        setcookie("bgcolor", $_GET['c'], time() + (86400 * 30), "/");
+        header("Location: index.php");
+        exit;
+    }
+    if (isset($_GET['accion']) && $_GET['accion'] === 'idioma' && isset($_GET['lang'])) {
+    $idiomaElegido = $_GET['lang'];
+    // Guardamos la cookie por 30 días
+    setcookie('idioma', $idiomaElegido, time() + (86400 * 30), "/");
+    // Redirigimos a la misma página para que se aplique el cambio al recargar
+    header("Location: index.php");
+    exit;
+}
+}
+}
+
+
 }

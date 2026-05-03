@@ -6,7 +6,7 @@ $controller = new ControllerCRUD($gestor);
 $usuarioController = new ControllerUsuario($gestor);
 
 $accion = $_GET['accion'] ?? 'index';
-
+$controller->gestionarPreferencias();
 switch ($accion) {
     case 'login':
         $usuarioController->login();
